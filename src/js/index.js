@@ -1,15 +1,28 @@
-//import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
-
-//include bootstrap npm library into the bundle
 import "bootstrap";
-
-//include your index.scss file into the bundle
 import "../styles/index.scss";
+import PropTypes from "prop-types";
 
-//import your own components
-import { Home } from "./component/home.js";
+class Seconds extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { distance: props.interval };
+	}
+	componentDidMount() {
+		setInterval(() => {
+			this.setState(() => {
+				return { distance: this.state.distance + 1 };
+			});
+		}, 1000);
+	}
+	render() {
+		return <p>{this.state.distance}</p>;
+	}
+}
 
-//render your react application
-ReactDOM.render(<Home />, document.querySelector("#app"));
+var counter = 0;
+ReactDOM.render(<Seconds interval={counter} />, document.querySelector("#app"));
+Seconds.propTypes = {
+	interval: PropTypes.number
+};
